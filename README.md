@@ -15,7 +15,9 @@ Perfect as a portfolio gallery, product showcase, or personal project demo.
 - Clean and minimal UI design
 
 - CODEALPHA TASK 2
- 🔢 Basic Calculator
+
+
+## 🔢 Basic Calculator
 
 A simple **calculator app** built with **HTML, CSS, and JavaScript**.  
 It supports all basic arithmetic operations and includes a clean user interface with real-time result display.  
