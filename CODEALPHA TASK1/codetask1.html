@@ -1,0 +1,279 @@
+        
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Image Gallery</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background: #4a90e2;    
+      color: white;
+    }
+
+    .filters {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .filters button {
+      margin: 5px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      background: #e0e0e0;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .filters button.active,
+    .filters button:hover {
+      background: #4a90e2;
+      color: white;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .chip {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 1000;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 12px;
+    }
+
+    .lightbox p {
+      color: white;
+      margin-top: 15px;
+    }
+
+    .close,
+    .prev,
+    .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.7);
+      border: none;
+      font-size: 24px;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .close {
+      top: 20px;
+      right: 20px;
+      transform: none;
+    }
+
+    .prev {
+      left: 20px;
+    }
+
+    .next {
+      right: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Image Gallery</h1>
+    <p></p>
+  </header>
+
+  <section class="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="nature">Nature</button>
+    <button class="filter-btn" data-filter="animals">Animals</button>
+    <button class="filter-btn" data-filter="people">People</button>
+    <button class="filter-btn" data-filter="city">City</button>
+  </section>
+
+  <main class="gallery" id="gallery">
+
+    <!-- Nature -->
+    <figure class="card" data-tags="nature" data-index="0" data-src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=80" data-caption="Snowy mountains under clear sky">
+      <figcaption class="chip">nature</figcaption>
+      <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80" alt="Snowy mountains" loading="lazy" />
+    </figure>
+
+    <figure class="card" data-tags="nature" data-index="1" data-src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80" data-caption="Green valley with river">
+      <figcaption class="chip">nature</figcaption>
+      <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80" alt="Valley landscape" loading="lazy" />
+    </figure>
+
+    <!-- Animals -->
+    <figure class="card" data-tags="animals" data-index="2" data-src="https://safariavventura.com/wp-content/uploads/2018/02/leone-africano-2.jpg" data-caption="Bear">
+      <figcaption class="chip">animals</figcaption>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Ours_brun_parcanimalierpyrenees_1.jpg" alt="Bear" loading="lazy" />
+    </figure>
+
+    <figure class="card" data-tags="animals" data-index="3" data-src="https://images.unsplash.com/photo-1618828660507-7c81857232e7?auto=format&fit=crop&w=1600&q=80" data-caption="Lion resting in savannah">
+      <figcaption class="chip">animals</figcaption>
+      <img src="https://safariavventura.com/wp-content/uploads/2018/02/leone-africano-2.jpg" alt="Lion" loading="lazy" />
+    </figure>
+
+    <!-- People -->
+    <figure class="card" data-tags="people" data-index="4" data-src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1600&q=80" data-caption="Portrait of a smiling woman">
+      <figcaption class="chip">people</figcaption>
+      <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" alt="Portrait woman" loading="lazy" />
+    </figure>
+
+    <figure class="card" data-tags="people" data-index="5" data-src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1600&q=80" data-caption="Friends outdoors in sunshine">
+      <figcaption class="chip">people</figcaption>
+      <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=600&q=80" alt="Friends outdoors" loading="lazy" />
+    </figure>
+
+    <!-- City -->
+    <figure class="card" data-tags="city" data-index="6" data-src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=1600&q=80" data-caption="Modern city skyline at dusk">
+      <figcaption class="chip">city</figcaption>
+      <img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=600&q=80" alt="City skyline" loading="lazy" />
+    </figure>
+
+    <figure class="card" data-tags="city" data-index="7" data-src="https://images.unsplash.com/photo-1486308510493-aa64833634ef?auto=format&fit=crop&w=1600&q=80" data-caption="Old street with evening lights">
+      <figcaption class="chip">city</figcaption>
+      <img src="https://static.vecteezy.com/system/resources/previews/025/527/703/large_2x/old-streets-in-european-city-old-town-illustration-ai-generative-photo.jpg" alt="Old street lights" loading="lazy" />
+    </figure>
+
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="close" id="close">&times;</button>
+    <button class="prev" id="prev">&#10094;</button>
+    <img id="lightbox-img" src="" alt="" />
+    <p id="lightbox-caption"></p>
+    <button class="next" id="next">&#10095;</button>
+  </div>
+
+  <script>
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    const cards = document.querySelectorAll(".card");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const lightboxCaption = document.getElementById("lightbox-caption");
+    const closeBtn = document.getElementById("close");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+
+    let currentIndex = 0;
+
+    // Filtering
+    filterBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const filter = btn.dataset.filter;
+        cards.forEach(card => {
+          if (filter === "all" || card.dataset.tags.includes(filter)) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+
+    // Lightbox
+    cards.forEach(card => {
+      card.addEventListener("click", () => {
+        currentIndex = parseInt(card.dataset.index);
+        showLightbox(currentIndex);
+      });
+    });
+
+    function showLightbox(index) {
+      const card = cards[index];
+      lightboxImg.src = card.dataset.src;
+      lightboxCaption.textContent = card.dataset.caption;
+      lightbox.style.display = "flex";
+    }
+
+    closeBtn.addEventListener("click", () => {
+      lightbox.style.display = "none";
+    });
+
+    prevBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+      showLightbox(currentIndex);
+    });
+
+    nextBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % cards.length;
+      showLightbox(currentIndex);
+    });
+
+    window.addEventListener("keydown", e => {
+      if (lightbox.style.display === "flex") {
+        if (e.key === "ArrowLeft") prevBtn.click();
+        if (e.key === "ArrowRight") nextBtn.click();
+        if (e.key === "Escape") closeBtn.click();
+      }
+    });
+  </script>
+
+</body>
+</html>
